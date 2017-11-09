@@ -26,10 +26,22 @@ public class Estudiante extends PersonaGenerica  implements EstudiantesHelper ,C
 	public LocalTime getHoraEntradaGym() {return horaEntradaGym;}
 	public LocalTime getHoraSalidaGym() {return horaSalidaGym;}
 	public long getDiasAsistenciaGym() {return ChronoUnit.DAYS.between(fechaAltaGym, LocalDate.now());}
-	public List<Sesion> getSesion() {List<Sesion> sesion=new ArrayList<>();
-		if(getHoraEntradaGym().isBefore(LocalTime.of(14, 00, 00)))sesion.add(Estudiante.Sesion.MAÑANA);
-		if(getHoraEntradaGym().isAfter(LocalTime.of(14, 00, 00)))sesion.add(Estudiante.Sesion.TARDE);
-		if(getHoraSalidaGym().isAfter(LocalTime.of(20, 00, 00)))sesion.add(Estudiante.Sesion.NOCHE);
+	public boolean intervalo(LocalTime entra,LocalTime sal,LocalTime inicio,LocalTime fin) {
+		//after despues
+		//before antes
+		if(entra.isBefore(inicio)&&sal.isAfter(inicio))return true;//entra antes de inicio sale despues de inicio
+		if(entra.isAfter(inicio)&&sal.isBefore(fin))return true;//entra despues de inicio sale antes de fin
+		if(entra.isBefore(fin)&&sal.isAfter(fin))return true;//entra antes de fin sale despues de fin
+		return false;
+	}
+	
+	public List<Sesion> getSesion() {List<Sesion> sesion=new ArrayList<>();//before,antes
+if(intervalo(getHoraEntradaGym(),getHoraSalidaGym(),LocalTime.of(6, 00, 00),LocalTime.of(13, 00, 00)))
+	sesion.add(Estudiante.Sesion.MAÑANA);
+if(intervalo(getHoraEntradaGym(),getHoraSalidaGym(),LocalTime.of(13, 00, 00),LocalTime.of(21, 00, 00)))
+	sesion.add(Estudiante.Sesion.TARDE);
+if(intervalo(getHoraEntradaGym(),getHoraSalidaGym(),LocalTime.of(21, 00, 00),LocalTime.of(6, 00, 00)))
+	sesion.add(Estudiante.Sesion.NOCHE);
 		return sesion;}
 	
 	public void setLenguajesProgramacion(TreeSet<String> lenguajesProgramacion) {this.lenguajesProgramacion = lenguajesProgramacion;}
@@ -82,7 +94,7 @@ public Estudiante() {
 		this.fechaMatriculacion=nacimiento();
 		this.fechaAltaGym=fecha(this.fechaMatriculacion,LocalDate.now());
 		this.horaEntradaGym=hora(0);
-		this.horaSalidaGym=hora(this.horaEntradaGym.getSecond());
+		this.horaSalidaGym=hora(this.horaEntradaGym.toSecondOfDay());
 		
 	}
 		

@@ -112,7 +112,9 @@ public class PersonaGenerica {
 	public static LocalDate nacimiento() {return LocalDate.of(numeroInt(1950,2010), numeroInt(1,12),numeroInt(1,28));}
 	public static LocalDate fecha(LocalDate ini,LocalDate fin) {	return LocalDate.of(numeroInt(ini.getYear(),fin.getYear()-1), numeroInt(1,12),numeroInt(1,28));}
 	public static LocalTime hora(int inicial) {
-		int x;do { x=numeroInt(1,3600*24);} while (inicial>x); 
+		int x;
+		do { x=numeroInt(1,3600*24);}
+		while (inicial>x); 
 		return LocalTime.ofSecondOfDay(x);}
 	
 	public static String correo() {String cadena="";
