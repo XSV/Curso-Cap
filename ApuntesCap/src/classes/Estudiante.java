@@ -1,7 +1,6 @@
 package classes;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,11 @@ public class Estudiante extends PersonaGenerica  implements EstudiantesHelper ,C
 	public LocalTime getHoraEntradaGym() {return horaEntradaGym;}
 	public LocalTime getHoraSalidaGym() {return horaSalidaGym;}
 	public long getDiasAsistenciaGym() {return ChronoUnit.DAYS.between(fechaAltaGym, LocalDate.now());}
-	
+	public List<Sesion> getSesion() {List<Sesion> sesion=new ArrayList<>();
+		if(getHoraEntradaGym().isBefore(LocalTime.of(14, 00, 00)))sesion.add(Estudiante.Sesion.MAÑANA);
+		if(getHoraEntradaGym().isAfter(LocalTime.of(14, 00, 00)))sesion.add(Estudiante.Sesion.TARDE);
+		if(getHoraSalidaGym().isAfter(LocalTime.of(20, 00, 00)))sesion.add(Estudiante.Sesion.NOCHE);
+		return sesion;}
 	
 	public void setLenguajesProgramacion(TreeSet<String> lenguajesProgramacion) {this.lenguajesProgramacion = lenguajesProgramacion;}
 	public void setHorasJava(Integer horasJava) {this.horasJava = horasJava;}
