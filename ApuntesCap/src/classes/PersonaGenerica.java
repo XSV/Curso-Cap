@@ -1,5 +1,6 @@
 package classes;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Period;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -108,6 +109,11 @@ public class PersonaGenerica {
 	if( a==1)return Sex.HOMBRE;	return Sex.MUJER;
 		}
 	public static LocalDate nacimiento() {return LocalDate.of(numeroInt(1950,2010), numeroInt(1,12),numeroInt(1,28));}
+	public static LocalDate fecha(LocalDate ini,LocalDate fin) {	return LocalDate.of(numeroInt(ini.getYear(),fin.getYear()-1), numeroInt(1,12),numeroInt(1,28));}
+	public static LocalTime hora(int inicial) {
+		int x;do { x=numeroInt(1,3600*24);} while (inicial>x); 
+		return LocalTime.ofSecondOfDay(x);}
+	
 	public static String correo() {String cadena="";
 	for(int x=0;x<10;x++) {cadena+=Character.toString((char) (65+numeroInt(0,24)));;}
 	return cadena+"@um.es";}
