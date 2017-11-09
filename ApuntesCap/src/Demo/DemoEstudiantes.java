@@ -8,6 +8,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import classes.Estudiante;
+
 public class DemoEstudiantes {
 	
 	public static void main(String[] args) {

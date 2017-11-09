@@ -23,6 +23,7 @@ public class PersonaGenerica {
 	public void setNacimiento(LocalDate nacimiento) {this.nacimiento = nacimiento;}
 	public void setCorreo(String correo) {this.correo = correo;}
 	
+	public String getNComplet(){return nombre+" "+primerApellido+" "+segundoApellido;}
 	public String getNombre(){return nombre;}
 	public String getPrimerApellido(){	return primerApellido;}
 	public String getSegundoApellido() {return segundoApellido;}

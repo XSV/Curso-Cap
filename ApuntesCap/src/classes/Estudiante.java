@@ -1,6 +1,8 @@
 package classes;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -12,28 +14,20 @@ public class Estudiante extends PersonaGenerica  implements EstudiantesHelper ,C
 	private Integer horasJava;
 	private Facultades facultad;
 	private LocalDate fechaMatriculacion;
-	private LocalDate fechaAltaGym;
+	private final LocalDate fechaAltaGym;
 	private final LocalTime horaEntradaGym;
 	private final LocalTime horaSalidaGym;
-		/*
-	agregar fecha de alta en el gimnasio
-a cada estudiante agregar horario de asistencia
-hora de entrada y de salida-- estos valores no pueden ser nulos
-que sean imutables
-comprobar que la hora de salida sea antes que la de entrada comprobar
-
-al dar de alta , el alta no puede ser mayor a date now
-
-recorrer el listado de estudiantes y obtener un mapa que contenga el nombre y apellidos de cada estudiante
-
-	*/
-	
 	
 	//El siguiente metodo es redundante ,porque ya esta implementado en la interface
 	//public List<String> getLenguajesProgramacion() {	return lenguajesProgramacion;}
 	public Integer getHorasJava() {return horasJava;}
 	public Facultades getFacultad() {	return facultad;}
-	public final LocalDate getFechaMatriculacion() {return fechaMatriculacion;}
+	public LocalDate getFechaMatriculacion() {return fechaMatriculacion;}
+	public LocalDate getFechaAltaGym() {return fechaAltaGym;}
+	public LocalTime getHoraEntradaGym() {return horaEntradaGym;}
+	public LocalTime getHoraSalidaGym() {return horaSalidaGym;}
+	public long getDiasAsistenciaGym() {return ChronoUnit.DAYS.between(fechaAltaGym, LocalDate.now());}
+	
 	
 	public void setLenguajesProgramacion(TreeSet<String> lenguajesProgramacion) {this.lenguajesProgramacion = lenguajesProgramacion;}
 	public void setHorasJava(Integer horasJava) {this.horasJava = horasJava;}
@@ -50,6 +44,8 @@ public Estudiante(String nombre, String primerApellido, String segundoApellido, 
 		LocalDate fechaMatriculacion,String correo,Facultades facultad,TreeSet<String> lenguajesProgramacion,Integer horasJava
 		,LocalDate fechaAltaGym,LocalTime horaEntradaGym,LocalTime horaSalidaGym) throws Exception {
 	super(nombre,primerApellido,segundoApellido,sexo,nacimiento,correo);
+	if(fechaAltaGym.equals(null)||horaEntradaGym.equals(null)||horaSalidaGym.equals(null))
+	{throw new Exception("Se han Introducido valores nulos");}
 		this.facultad = facultad;
 		this.horasJava=horasJava;
 		this.lenguajesProgramacion = lenguajesProgramacion;
@@ -63,6 +59,8 @@ public Estudiante(String nombre, String primerApellido, String segundoApellido, 
 public Estudiante(Facultades facultad,TreeSet<String> lenguajesProgramacion,Integer horasJava,LocalDate fechaMatriculacion
 		,LocalDate fechaAltaGym,LocalTime horaEntradaGym,LocalTime horaSalidaGym) throws Exception{
 	super();
+	if(fechaAltaGym.equals(null)||horaEntradaGym.equals(null)||horaSalidaGym.equals(null))
+	{throw new Exception("Se han Introducido valores nulos");}
 		this.facultad = facultad;
 		this.horasJava=horasJava;
 		this.lenguajesProgramacion = lenguajesProgramacion;
