@@ -1,0 +1,170 @@
+	 MountainBike bici; es una declaracion.
+	 
+	bici= new MountainBike(0, 0, 0, 0); es una instancia, cuando se  realiza una instancia:
+	
+	Se invoca al constructor, 
+	Se le asigna memoria al objeto
+    Se inicializa las propiedades y estados de la clase
+    
+     												Access Levels 
+   	Modifier 						Class 			Package 			Subclass 				World
+   	
+	public 								Y 						Y 						Y 						Y
+	protected 						Y 						Y 						Y 						N
+	no modifier 					Y 						Y 						N					 	N
+	private 							Y 						N 						N 						N
+    
+    final 			Propiedad			no se puede heredar
+    final 			Metodo				no se puede sobrescrivir
+    
+    abstract 		Clase 			no se puede instanciar
+    abstract 		Metodo 		se tiene que hacer un overraid
+    
+    metodo factory crea una instancia del objeto
+    
+    un metodo no puede ser final y abstrac es una contradiccion
+    
+    Firma(Signature): se refiere al nombre del metodo y el tipo de parametro recicido
+    
+    public void Sumar(int a, int b){a=a+b }  Signature = Sumar(int,int)
+    
+    Nested Classes -- Clases Anidadas -- Helper Clases -- clases auxiliares
+   Se utilizan cuando el codigo que encierra las clasees anidadas solamente va a ser utilizzado por la clase contenedora,
+   en aras(con objetivo) de mejorar el mantenimiento y la legivilidad del codigo, ademas de la seguridad 
+   
+Forma logica de anidar clases, esto hace el paquete mas fluido, e incrementa el encapsulamiento.
+La clase anidada puede ser: public ,protected,no modifier,private 
+La clase anidada sera tratada como un metodo o propiedad
+ 
+   
+Clase Anidadad Estatica:			 		    no tiene acceso ninguno a los elementos de la clase contenedora
+Clase Anidadad Interna				 			si tiene acceso a la clase contenedora, no debe declarar ningun miembro que sea estatico,
+		    													porque los miembros de una clase anidada interna solamente existen a nivel de instacias de
+		    													la clase contenedora
+    													
+    																OuterClass.InnerClass innerObject = outerObject.new InnerClass();
+      
+Clase Anidadad Interna Locales							Clase que se declara dentro de un bloke o metodo, 
+			   																	ademas la clase local se compoorta similar a la clase interna anidada
+			   																	en el sentido de que puede acceder a todos los elementos de la clase contenedora.
+			   																	En ese sentido la clase local es similar a la clase local interna
+			   																	pero para acceder a las propoiedades de la clase contenedora las propiedades de la clase
+			   																	contenedora tienen que ser final o  effectively final (esto quierre decir:
+			   																	cuando el compilador ve, determina que le has asignado un valor a esa propieda y
+			   																	el valor no a cambiado mas).
+			   
+   Clase Anidadad Interna Anonimas(Lambda)	no tiene nombre y acaba en punto y coma,
+   																				loquesea=new Nombre_de_la_Interface(){cuerpo de la clase}
+   																				no se le puede agregar un constructor a la clase anonima
+   																				
+Expresiones lambda												por parametro le pasas un comportamiento
+   
+La Interface funcional contiene solamente un metodo abstracto, pero puede tener otros metodos.
+
+Cuando usar las clases anidadas.
+
+Estatica			Para cuando no necesites acceso a ninguno de los elementos de la clase contenedora.
+Locales			Para usar un codigo especifico varias veces dentro de un mismo sitio.
+Anonima			Para declarar metodos o campos adicionales en un punto en particular el cual no se volvera a usar.
+Lambda			Al encapsular una unidad simple de comportamiento, para pasarlo a otro metodo.
+
+Generecidad
+1-Independizar el codigo del tipo de dato usado
+2-Detectar errores en tiempo de compilacion.
+3-Toda la api apartir de la v8 esta implementada usando generacidad.
+
+En la generacion de la generidad el tipo no puede ser un dato primitivo.
+
+En generico el tipo de dato que recive hay que ponerlo antes del dato que devuelve.
+En la implementacion del metodo no puedes utilizar los operadores de comparacion booleano que se usan para los primitivos.
+(Usar compareTo, o equals)
+ public static <K, V> boolean compare(Pair<K, V> p1, Pair<K, V> p2) {}
+ Metodo publico statico que esta parametrizado por los paramteros de tipo K y V y que devuelve un booleano.
+ 
+ 
+ Implementacion de clase generica con multiplle extent se colocan primero las Clases y despues las Interfaces.
+ Class A { /* ... */ }
+interface B { /* ... */ }
+interface C { /* ... */ }
+class D <T extends A & B & C> { /* ... */ }
+De otra manera daria fallo
+
+
+Interface tipo de dato que en el cuerpo tiene metodos
+Todos los metodos de la interface son public por defecto.
+
+Abstractos(Sin Implementacion): Se tienen que implementar donde se extiendan
+Estaticos:			No necesita inicializarse, en cambio el default si necesita implementarse.
+						static public ZoneId getZoneId (String zoneString) {
+						        try {return ZoneId.of(zoneString);}
+						        catch (DateTimeException e) {System.err.println("Invalid time zone: " + zoneString +";using default time zone instead.");
+						        return ZoneId.systemDefault();}
+						    }
+						
+
+Defecto:			default ZonedDateTime getZonedDateTime(String zoneString) {
+        								return ZonedDateTime.of(getLocalDateTime(), getZoneId(zoneString));
+   										}
+
+
+statico existe en el plano de la clase o en el plano de la instancia
+
+Coleccion: Contenedor(Objeto) que agrupa multiples elementos en una unidad unica.
+Se usa para almacenar, manipular y establecer comunicacion con datos agrupados.
+
+Framework de Collecciones Es una arquitecctura para manejar ,organizar y actualizar a todas las colecciones
+Interfaces son el nucleo central del Framework de collecciones
+Y posibilitan a las colecciones ser manipuladas independientemente de los detalles de su representacion
+
+3 partes fundamentales
+Interface
+Implementaciones(Clases atraves de las que implementas las interfaces)
+Algoritmos(Conjunto de metodos que realizan calculos utiles tales como busqueda y ordenacion,
+ los cuales reciven su funcionalidad atraves de las interfaces funcionales)
+ 
+Dos interfaces map y collection.
+Map no usa los mismos metodos que el resto de elementos, por eso es que no hereda de collection si no que el mismo es una interface.
+
+Polimorfismo misma cara distintas implementaciones.(Metodos sobre cargados)
+collection no tiene clases que implementen sus metrodos directamente ya que sus metodos son estaticos
+No se debe crear ninguna coleccion de tipo colenction
+Ya que no tiene implementacion atraves de clases solo tiene atraves de interfaces,
+
+Set:  Conjunto no repetido, pero desordenado.(Shorted set , conjunto ordenado y que no se repite)
+List: se Auto ordena, se permite duplicados, actua atraves de un indice.
+Queue:  colas,FIFO
+
+Deque:  colas,FIFO, LIFO
+Map: objeto que mapea claves con valores.
+
+public static <T> List<T> asList(T... a)
+esta parametrizado por t devuelve una lista de objetos de tipo t, y recive varios parametros de tipo t
+
+listadoPersonas.stream().filter(predicate)
+el metodo filter recive un a interface funcional
+
+Cuando la expresion lambda lo unico que hace es imbocar a un metodo
+es mas eficiente llamar al propio metodo por referencia
+
+	listadoPersonas.stream()
+		.filter(p->p.getGender()==Person.Sex.MALE&&p.getAge()>18)
+		.map(p->p.getEmailAddress())
+		.forEach(e->System.out.println(e));
+		
+			listadoPersonas.stream()
+		.filter(p->p.getGender()==Person.Sex.MALE&&p.getAge()>18)
+		.map(Person::getEmailAddress)
+		.forEach(e->System.out.println(e));
+		
+		Tuberia Pipeline, secuencia de funciones de agregado
+		Contiene 3 elementos, 
+		-Un origen(Coleccioin,archivo,bbdd)
+        -0 o mas operaciones intermedias.
+		-Y una y solo una operacion terminal o final.(la que lo reduce todo a un valor)
+
+un mapa es un objeto que mapea claves con valor y no permite que las claves esten duplicadas,
+al igual que las demas interfaces un mapa tiene sus propias operaciones basicas, 
+para agregar es put
+
+
+en el date time el with es equivalente al set
