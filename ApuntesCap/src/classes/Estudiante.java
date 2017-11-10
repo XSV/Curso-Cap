@@ -1,4 +1,5 @@
 package classes;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -26,6 +27,7 @@ public class Estudiante extends PersonaGenerica  implements EstudiantesHelper ,C
 	public LocalTime getHoraEntradaGym() {return horaEntradaGym;}
 	public LocalTime getHoraSalidaGym() {return horaSalidaGym;}
 	public long getDiasAsistenciaGym() {return ChronoUnit.DAYS.between(fechaAltaGym, LocalDate.now());}
+	public long getHorasDiaGym() {return Duration.between(horaEntradaGym, horaSalidaGym).toHours();}
 	public boolean intervalo(LocalTime entra,LocalTime sal,LocalTime inicio,LocalTime fin) {
 		//after despues
 		//before antes
@@ -35,19 +37,28 @@ public class Estudiante extends PersonaGenerica  implements EstudiantesHelper ,C
 		return false;
 	}
 	
-	public List<Sesion> getSesion() {List<Sesion> sesion=new ArrayList<>();//before,antes
+	public Sesion getSesion() {//before,antes
 if(intervalo(getHoraEntradaGym(),getHoraSalidaGym(),LocalTime.of(6, 00, 00),LocalTime.of(13, 00, 00)))
-	sesion.add(Estudiante.Sesion.MAÑANA);
+	return Estudiante.Sesion.MAÑANA;
 if(intervalo(getHoraEntradaGym(),getHoraSalidaGym(),LocalTime.of(13, 00, 00),LocalTime.of(21, 00, 00)))
-	sesion.add(Estudiante.Sesion.TARDE);
-if(intervalo(getHoraEntradaGym(),getHoraSalidaGym(),LocalTime.of(21, 00, 00),LocalTime.of(6, 00, 00)))
-	sesion.add(Estudiante.Sesion.NOCHE);
-		return sesion;}
+	return Estudiante.Sesion.TARDE;
+	return Estudiante.Sesion.NOCHE;
+		}
 	
 	public void setLenguajesProgramacion(TreeSet<String> lenguajesProgramacion) {this.lenguajesProgramacion = lenguajesProgramacion;}
 	public void setHorasJava(Integer horasJava) {this.horasJava = horasJava;}
 	public void setFacultad(Facultades facultad) {	this.facultad = facultad;}
 	public void setFechaMatriculacion(LocalDate fechaMatriculacion) {this.fechaMatriculacion = fechaMatriculacion;}
+	
+	public static void pintarOrdenado(List<Estudiante> lista) {
+		lista.stream().sorted().forEachOrdered(e->System.out.println(
+				e.getNComplet()+" "+
+				e.getSesion()+" "+
+				e.getHoraEntradaGym()+" "+
+				e.getHoraSalidaGym()));
+	}
+		
+		
 	
 	
 @Override
