@@ -77,10 +77,12 @@ for(Estudiante.Sesion s:Estudiante.Sesion.values())
 						
 			for(Map.Entry<Facultades, Map<Sesion, List<Estudiante>>> entry : mapFyS.entrySet()) {
 				for(Map.Entry<Sesion, List<Estudiante>> entry2:entry.getValue().entrySet()) {
-				/*/System.out.println("Facultad de "+entry.getKey()+" Sesion: "+entry2.getKey());
+				/**/
+					System.out.println("Facultad de "+entry.getKey()+" Sesion: "+entry2.getKey());
 					System.out.println();
 					Estudiante.pintarOrdenado(entry2.getValue());		
-					System.out.println();/**/
+					System.out.println();
+			  /**/
 				}
 		}
 			
