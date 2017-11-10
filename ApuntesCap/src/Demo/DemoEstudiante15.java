@@ -2,12 +2,16 @@ package Demo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import classes.Estudiante;
+import classes.Estudiante.Facultades;
+import classes.Estudiante.Sesion;
 
 public class DemoEstudiante15 {
 	public static void main(String[] args) {
@@ -27,7 +31,7 @@ public class DemoEstudiante15 {
 			for(Map.Entry<String, Double> entry : lJ.entrySet()) {
 			String nombreC=entry.getKey();
 			Double dias=entry.getValue();
-			System.out.println("Nombre Completo: "+nombreC+"  Dias Asistidos: "+dias);
+		//	System.out.println("Nombre Completo: "+nombreC+"  Dias Asistidos: "+dias);
 		}
 		
 			/********************************
@@ -48,6 +52,7 @@ for(Estudiante.Sesion s:Estudiante.Sesion.values())
 			m.put(Estudiante.Sesion.NOCHE,estudiantes.stream().filter(e->e.getSesion().contains(Estudiante.Sesion.NOCHE))
 					.collect(Collectors.toList()));
 			*/
+/*
 			for(Map.Entry<Estudiante.Sesion, List<Estudiante>> entry : m.entrySet()) {
 				System.out.println("Sesion: "+entry.getKey());
 				entry.getValue().stream().forEach(e->System.out.println(
@@ -56,26 +61,28 @@ for(Estudiante.Sesion s:Estudiante.Sesion.values())
 						e.getHoraEntradaGym()+" "+
 						e.getHoraSalidaGym()));
 			}
-			
+			*/
 			
 			/********************************
 			 * 3. Almacenar en una Colección Map los estudiantes, agrupados por Facultad y por horario de asistencia al gimnasio
 			 **************************** */
+			Map<Estudiante.Facultades,Map<List<Estudiante.Sesion>,List<Estudiante>>>mapFyS;
+			mapFyS=new HashMap<>();
 			
-			Map<Estudiante.Sesion,List<Estudiante>>ma;
-			ma=new HashMap<>();
-
-			for(Estudiante.Sesion s:Estudiante.Sesion.values())
-				ma.put(s,estudiantes.stream().filter(e->e.getSesion().contains(s)).collect(Collectors.toList()));
+			mapFyS=estudiantes.stream()
+					.collect(Collectors.groupingBy(Estudiante::getFacultad,Collectors.groupingBy(Estudiante::getSesion)));
 			
-			for(Map.Entry<Estudiante.Sesion, List<Estudiante>> entry : ma.entrySet()) {
-				System.out.println("Sesion: "+entry.getKey());
-				entry.getValue().stream().forEach(e->System.out.println(
-						e.getNComplet()+" "+
-						e.getSesion()+" "+
-						e.getHoraEntradaGym()+" "+
-						e.getHoraSalidaGym()));
-			}
+			
+			for(Map.Entry <Estudiante.Facultades,Map<List<Estudiante.Sesion>,List<Estudiante>>> entry : mapFyS.entrySet()) {
+				Map<List<Sesion>, List<Estudiante>>temp=entry.getValue();
+			   temp.values().forEach(e->{e.forEach(x->{
+				   System.out.println(x.getFacultad());
+				   System.out.println(x.getSesion());
+				   System.out.println(x.datos());
+				   });});
+			
+					
+			}}
 			
 			
 			
@@ -103,4 +110,4 @@ for(Estudiante.Sesion s:Estudiante.Sesion.values())
 		 * 
 		 * */
 		
-	}}
+	}
